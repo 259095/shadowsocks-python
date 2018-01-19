@@ -1,0 +1,17 @@
+version: '3'
+services:
+  python:
+    build: .
+    image: shadowsocks:python
+    container_name: shadowsocks
+    env_file: .env
+    ports:
+      - "${SERVER_PORT}:${SERVER_PORT}/tcp"
+      - "${SERVER_PORT}:${SERVER_PORT}/udp"
+    command: -s ${SERVER_ADDR} -p ${SERVER_PORT} -k ${PASSWORD} -m ${METHOD}
+    restart: always
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
